@@ -28,3 +28,17 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :converter, ecto_repos: [Converter.CollectorRepo, Converter.WORepo]
+
+config :converter, Converter.CollectorRepo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "collector",
+  username: "postgres",
+  password: "postgres"
+
+config :converter, Converter.WORepo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "wo_dev",
+  username: "postgres",
+  password: "postgres"

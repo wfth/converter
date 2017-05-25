@@ -1,18 +1,19 @@
 defmodule Converter do
+  use Application
+
   @moduledoc """
   Documentation for Converter.
   """
 
-  @doc """
-  Hello world.
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
 
-  ## Examples
+    children = [
+      supervisor(Converter.CollectorRepo, []),
+      supervisor(Converter.WORepo, [])
+    ]
 
-      iex> Converter.hello
-      :world
-
-  """
-  def hello do
-    :world
+    opts = [strategy: :one_for_one, name: Converter.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end

@@ -15,7 +15,8 @@ defmodule Converter.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger]]
+    [extra_applications: [:logger],
+     mod: {Converter, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -28,6 +29,9 @@ defmodule Converter.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:postgrex, ">= 0.0.0"},
+      {:ecto, "~> 2.1"}
+    ]
   end
 end
