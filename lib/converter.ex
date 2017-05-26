@@ -20,14 +20,7 @@ defmodule Converter do
 
   def convert do
     sermon_series = Converter.CollectorRepo.all(from(ss in "sermon_series", select: {ss.title, ss.description}))
-    add_to_wo_db(Enum.at(sermon_series, 0))
-    _convert(List.delete_at(sermon_series, 0))
-  end
-
-  def _convert([]), do: nil
-  def _convert(sermon_series) do
-    add_to_wo_db(Enum.at(sermon_series, 0))
-    _convert(List.delete_at(sermon_series, 0))
+    Enum.map(sermon_series, fn(ss) -> add_to_wo_db(ss) end)
   end
 
   def add_to_wo_db({title, description}) do
