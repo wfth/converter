@@ -19,6 +19,11 @@ defmodule Mix.Tasks.Converter.Convert do
   end
 
   def add_to_wo_db({title, description}) do
-    Converter.WORepo.insert! %WOSermonSeries{title: title, description: description, inserted_at: Ecto.DateTime.utc, updated_at: Ecto.DateTime.utc}
+    if Converter.WORepo.get_by(WOSermonSeries, title: title) == nil do
+      Converter.WORepo.insert! %WOSermonSeries{ title: title,
+                                                description: description,
+                                                inserted_at: Ecto.DateTime.utc,
+                                                updated_at: Ecto.DateTime.utc }
+    end
   end
 end
