@@ -21,7 +21,7 @@ defmodule Mix.Tasks.Converter.Convert do
   def insert([]), do: nil
   def insert([{id, title, description} | tail]) do
     add_sermon_series_to_wo_db({title, description})
-    sermons = Converter.CollectorRepo.all(from(s in "sermons", select: {s.title, s.passage}, where: s.sermon_series_id == ^id))
+    sermons = Converter.CollectorRepo.all(from(s in "sermons", select: {s.title, s.description, s.passage}, where: s.sermon_series_id == ^id))
     Enum.map(sermons, fn(s) -> add_sermon_to_wo_db(s, id) end)
 
     insert(tail)
@@ -36,9 +36,10 @@ defmodule Mix.Tasks.Converter.Convert do
     end
   end
 
-  def add_sermon_to_wo_db({title, passage}, sermon_series_id) do
+  def add_sermon_to_wo_db({title, description, passage}, sermon_series_id) do
     if Converter.WORepo.get_by(WOSermon, title: title) == nil do
       Converter.WORepo.insert! %WOSermon{ title: title,
+                                          description: description,
                                           passage: passage,
                                           sermon_series_id: sermon_series_id,
                                           inserted_at: Ecto.DateTime.utc,
