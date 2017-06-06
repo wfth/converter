@@ -4,7 +4,7 @@ defmodule WOSermon do
   schema "sermons" do
     field :title, :string
     field :description, :string
-    field :passage, :string
+    field :passages, :string
     field :sermon_series_id, :integer
 
     timestamps()

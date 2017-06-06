@@ -4,5 +4,6 @@ defmodule CollectorSermonSeries do
   schema "sermon_series" do
     field :title, :string
     field :description, :string
+    field :passages, :string
   end
 end
