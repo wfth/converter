@@ -14,15 +14,15 @@ defmodule Mix.Tasks.Converter.Convert do
   end
 
   def convert do
-    sermon_series = Converter.CollectorRepo.all(from(ss in "sermon_series", select: {ss.id, ss.title, ss.description, ss.passages}))
-    insert(sermon_series)
+    co_sermon_series = Converter.CollectorRepo.all(from(ss in "sermon_series", select: {ss.id, ss.title, ss.description, ss.passages}))
+    insert(co_sermon_series)
   end
 
   def insert([]), do: nil
-  def insert([{id, title, description, passages} | tail]) do
-    add_sermon_series_to_wo_db({title, description, passages})
-    sermons = Converter.CollectorRepo.all(from(s in "sermons", select: {s.title, s.description, s.passage}, where: s.sermon_series_id == ^id))
-    Enum.map(sermons, fn(s) -> add_sermon_to_wo_db(s, id) end)
+  def insert([{co_id, title, description, passages} | tail]) do
+    wo_sermon_series = add_sermon_series_to_wo_db({title, description, passages})
+    co_sermons = Converter.CollectorRepo.all(from(s in "sermons", select: {s.title, s.description, s.passage}, where: s.sermon_series_id == ^co_id))
+    Enum.map(co_sermons, fn(s) -> add_sermon_to_wo_db(s, wo_sermon_series.id) end)
 
     insert(tail)
   end
