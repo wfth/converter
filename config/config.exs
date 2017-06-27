@@ -33,7 +33,7 @@ config :converter, ecto_repos: [Converter.CollectorRepo, Converter.WORepo]
 
 config :converter, Converter.CollectorRepo,
   adapter: Ecto.Adapters.Postgres,
-  database: "collector",
+  database: "collector_dev",
   username: "postgres",
   password: "postgres"
 
