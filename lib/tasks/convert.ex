@@ -33,7 +33,7 @@ defmodule Mix.Tasks.Converter.Convert do
 
   def add_sermon_series_to_wo_db({title, description, passages, released_on, graphic_key, buy_graphic_key, price}) do
     if Converter.WORepo.get_by(WOSermonSeries, title: title) == nil do
-      Converter.WORepo.insert! %WOSermonSeries{ uuid: uuid_from_key(graphic_key),
+      Converter.WORepo.insert! %WOSermonSeries{ uuid: uuid(graphic_key),
                                                 title: title,
                                                 description: description,
                                                 passages: passages,
@@ -60,10 +60,12 @@ defmodule Mix.Tasks.Converter.Convert do
     end
   end
 
-  def uuid_from_key(key) do
+  def uuid(nil), do: Ecto.UUID.generate()
+  def uuid(key) do
     key |> String.split("/") |> Enum.at(1)
   end
-  
+
+  def url_from_key(nil), do: nil
   def url_from_key(key) do
     "https://wisdomonline-development.s3.amazonaws.com/" <> key
   end
