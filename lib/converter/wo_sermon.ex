@@ -2,6 +2,7 @@ defmodule WOSermon do
   use Ecto.Schema
 
   schema "sermons" do
+    field :uuid, :string
     field :title, :string
     field :description, :string
     field :passages, :string

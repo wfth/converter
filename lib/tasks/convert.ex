@@ -48,7 +48,8 @@ defmodule Mix.Tasks.Converter.Convert do
 
   def add_sermon_to_wo_db({title, description, passage, audio_key, _transcript_key, buy_graphic_key, price}, sermon_series_id) do
     if Converter.WORepo.get_by(WOSermon, title: title) == nil do
-      Converter.WORepo.insert! %WOSermon{ title: title,
+      Converter.WORepo.insert! %WOSermon{ uuid: uuid(audio_key),
+                                          title: title,
                                           description: description,
                                           passages: passage,
                                           sermon_series_id: sermon_series_id,
@@ -67,6 +68,6 @@ defmodule Mix.Tasks.Converter.Convert do
 
   def url_from_key(nil), do: nil
   def url_from_key(key) do
-    "https://wisdomonline-development.s3.amazonaws.com/" <> key
+    "https://s3.amazonaws.com/wisdomonline-development/" <> key
   end
 end
