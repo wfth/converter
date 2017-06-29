@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+pg_dump -Fc --no-acl --no-owner wo_dev > /tmp/wo_dev_dump.sql
+WOH_DATABASE_PATH="wisdomonline-development/$(uuid)"
+aws s3 --profile wfth cp --acl public-read /tmp/wo_dev_dump.sql "s3://$WOH_DATABASE_PATH"
+heroku pg:backups:restore "https://s3.amazonaws.com/$WOH_DATABASE_PATH" --app wo-ex-stage

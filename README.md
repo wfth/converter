@@ -1,19 +1,24 @@
 # Converter
 
-**TODO: Add description**
+Converts a database created by the [Collector](https://github.com/wfth/collector) into a database useful to [WO](https://github.com/wfth/wo).
 
-## Installation
+## Development
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `converter` to your list of dependencies in `mix.exs`:
+#### Install Tools
 
-```elixir
-def deps do
-  [{:converter, "~> 0.1.0"}]
-end
-```
+1. Install [Node Version Manager](https://github.com/creationix/nvm)
+2. Install [direnv](https://direnv.net)
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/converter](https://hexdocs.pm/converter).
+#### Usage
 
+1. Follow instructions to set up Collector and WO.
+2. Install dependencies with `mix deps.get`
+3. Review [`config/config.exs`](config/config.exs) to ensure `Converter.CollectorRepo` and `Converter.WORepo` are properly configured
+4. `mix converter.convert`
+
+## Heroku
+
+The Converter cannot connect directly to the Heroku database.
+
+1. Convert the Collector database in a development environment
+2. `script/restore-staging-db`
