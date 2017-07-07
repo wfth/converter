@@ -23,7 +23,7 @@ defmodule Mix.Tasks.Converter.Convert do
   def insert([{co_id, title, description, passages, released_on, graphic_key, buy_graphic_key, price} | tail]) do
     wo_sermon_series = add_sermon_series_to_wo_db({title, description, passages, released_on, graphic_key, buy_graphic_key, price})
     co_sermons = Converter.CollectorRepo.all(from(s in "sermons",
-          select: {s.title, s.description, s.passage, s.audio_key, s.transcript_key, s.buy_graphic_key, s.price},
+          select: {s.title, s.description, s.passage, s.audio_key, s.transcript_key, s.transcript_text, s.buy_graphic_key, s.price},
           where: s.sermon_series_id == ^co_id,
           order_by: s.id))
     Enum.map(co_sermons, fn(s) -> add_sermon_to_wo_db(s, wo_sermon_series.id) end)
@@ -46,7 +46,7 @@ defmodule Mix.Tasks.Converter.Convert do
     end
   end
 
-  def add_sermon_to_wo_db({title, description, passage, audio_key, _transcript_key, buy_graphic_key, price}, sermon_series_id) do
+  def add_sermon_to_wo_db({title, description, passage, audio_key, transcript_key, transcript_text, buy_graphic_key, price}, sermon_series_id) do
     if Converter.WORepo.get_by(WOSermon, title: title) == nil do
       Converter.WORepo.insert! %WOSermon{ uuid: uuid(audio_key),
                                           title: title,
@@ -55,6 +55,8 @@ defmodule Mix.Tasks.Converter.Convert do
                                           sermon_series_id: sermon_series_id,
                                           audio_url: url_from_key(audio_key),
                                           buy_graphic_url: url_from_key(buy_graphic_key),
+                                          transcript_url: url_from_key(transcript_key),
+                                          transcript_text: transcript_text,
                                           price: price,
                                           inserted_at: Ecto.DateTime.utc,
                                           updated_at: Ecto.DateTime.utc }

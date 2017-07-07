@@ -7,6 +7,7 @@ defmodule CollectorSermon do
     field :passage, :string
     field :audio_key, :string
     field :transcript_key, :string
+    field :transcript_text, :string
     field :buy_graphic_key, :string
     field :price, :float
   end

@@ -10,6 +10,8 @@ defmodule WOSermon do
     field :audio_url, :string
     field :buy_graphic_url, :string
     field :price, :float
+    field :transcript_url, :string
+    field :transcript_text, :string
 
     timestamps()
   end
