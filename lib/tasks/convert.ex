@@ -70,6 +70,6 @@ defmodule Mix.Tasks.Converter.Convert do
 
   def url_from_key(nil), do: nil
   def url_from_key(key) do
-    "https://s3.amazonaws.com/wisdomonline-development/" <> key
+    "https://s3.amazonaws.com/wisdomonline-development/" <> String.replace(key, " ", "+")
   end
 end
