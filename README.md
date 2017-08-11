@@ -13,8 +13,8 @@ Converts a database created by the [Collector](https://github.com/wfth/collector
 
 1. Follow instructions to set up Collector and WO.
 2. Install dependencies with `mix deps.get`
-3. Review [`config/config.exs`](config/config.exs) to ensure `Converter.CollectorRepo` and `Converter.WORepo` are properly configured
-4. `mix converter.convert`
+3. `cp Dropbox/Isaac/collector_dump_20170811.sql /tmp/collector_dump.sql)`
+4. `script/load-collector-dump`
 
 ## Heroku
 

@@ -1,0 +1,10 @@
+dropdb collector_dev
+createdb collector_dev
+psql collector_dev < /tmp/collector_dump.sql
+
+(
+  cd ../wo
+  mix do ecto.drop, ecto.create, ecto.migrate
+)
+
+mix converter.convert
